@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://joeyhou.github.io/CreativityPrism/submit/">
       
       
-        <link rel="prev" href="../data/">
+        <link rel="prev" href="../method/">
       
       
         <link rel="next" href="../adding-a-task/">
@@ -213,25 +213,6 @@
     
   
   Method
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../data/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Data
 
       </a>
     </li>
@@ -456,33 +437,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../data/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Data
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -633,6 +587,45 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coverage-caveat-creativity_index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coverage caveat: creativity_index
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -756,7 +749,7 @@ python<span class="w"> </span>task_runner/run.py<span class="w"> </span>--list-m
 <p>Use the same judge model as the paper so scores are comparable: ...</p>
 <div class="admonition warning">
 <p class="admonition-title"><code>creativity_index</code></p>
-<p>This task looks up n-grams in an external index, and the full configuration is not feasible against the public endpoint. See <a href="../data/#coverage-caveat-creativity_index">Data</a>. Say in your submission how you handled it (subset, your own index, or skipped).</p>
+<p>This task looks up n-grams in an external index, and the full configuration is not feasible against the public endpoint. See <a href="#coverage-caveat-creativity_index">the coverage caveat</a>. Say in your submission how you handled it (subset, your own index, or skipped).</p>
 </div>
 <h2 id="5-check-your-results">5. Check your results<a class="headerlink" href="#5-check-your-results" title="Permanent link">&para;</a></h2>
 <p>Make sure your run actually shows up in the shared table:</p>
@@ -774,6 +767,24 @@ python<span class="w"> </span>task_runner/run.py<span class="w"> </span>--list-m
 <p>We will check the numbers and add them. ...</p>
 <h2 id="submit-a-new-task">Submit a new task<a class="headerlink" href="#submit-a-new-task" title="Permanent link">&para;</a></h2>
 <p>Have a creativity task that should be in the benchmark? See <a href="../adding-a-task/">Adding a task</a>.</p>
+<h2 id="data">Data<a class="headerlink" href="#data" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Download <strong>leaderboard JSON</strong>: <a href="../assets/data/leaderboard.json">assets/data/leaderboard.json</a></li>
+</ul>
+<h3 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Scores are in <code>[0, 1]</code> range in JSON; pages display as percentages.</li>
+<li>Add per-task breakdowns as additional JSON files (e.g., <code>assets/data/creative_writing.json</code>) and link them here.</li>
+</ul>
+<h3 id="coverage-caveat-creativity_index">Coverage caveat: <code>creativity_index</code><a class="headerlink" href="#coverage-caveat-creativity_index" title="Permanent link">&para;</a></h3>
+<p><code>creativity_index</code> scores a generation by looking up every n-gram span in an
+external index (infini-gram). One document at one n-gram size is several hundred
+HTTP round trips, and the full published configuration -- 100 documents x 3
+domains x 8 n-gram sizes -- is on the order of 1.7 million lookups. That is not
+feasible against the public endpoint, which rate-limits by IP.</p>
+<p><strong>This task has therefore not been validated end to end at full scale in this
+repository.</strong> Inference runs normally; the scoring stage is verified on small
+subsets. If you need the full configuration, plan on hosting your own index.</p>
 
 
 
