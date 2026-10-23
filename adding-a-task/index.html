@@ -522,6 +522,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding a task
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -538,6 +556,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-write-four-files-no-central-edits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you write — four files, no central edits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-yaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The YAML
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The adapter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models-use-model_hub-and-pass-the-canonical-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models: use model_hub, and pass the canonical name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-parser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The parser
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-open-the-pr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before you open the PR
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -592,31 +695,43 @@
 
 <h1 id="adding-a-task">Adding a task<a class="headerlink" href="#adding-a-task" title="Permanent link">&para;</a></h1>
 <p>Email Joey</p>
-<!-- 
-
-Derived from actually doing it: a deliberately awkward task was written into
-`tasks/contrib_metaphor/` and integrated without touching a single central file.
-Every rule below earned its place by something breaking first.
-
-## What you write — four files, no central edits
-
-| File | What it is |
-|---|---|
-| `tasks/<your_task>/` | your code, in whatever layout you already have |
-| `registry/tasks/<your_task>.yaml` | the declaration the runner reads |
-| `registry/adapters/<your_task>.sh` | translates the runner's flags into your CLI |
-| `tasks/<your_task>/parser.py` | turns your outputs into rows for the shared table |
-
-**You do not edit the runner, the loader, or any gate.** The task list is read
-from `registry/tasks/*.yaml`; anything that needs to know about tasks asks there.
+<p>Derived from actually doing it: a deliberately awkward task was written into
+<code>tasks/contrib_metaphor/</code> and integrated without touching a single central file.
+Every rule below earned its place by something breaking first.</p>
+<h2 id="what-you-write-four-files-no-central-edits">What you write — four files, no central edits<a class="headerlink" href="#what-you-write-four-files-no-central-edits" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tasks/&lt;your_task&gt;/</code></td>
+<td>your code, in whatever layout you already have</td>
+</tr>
+<tr>
+<td><code>registry/tasks/&lt;your_task&gt;.yaml</code></td>
+<td>the declaration the runner reads</td>
+</tr>
+<tr>
+<td><code>registry/adapters/&lt;your_task&gt;.sh</code></td>
+<td>translates the runner's flags into your CLI</td>
+</tr>
+<tr>
+<td><code>tasks/&lt;your_task&gt;/parser.py</code></td>
+<td>turns your outputs into rows for the shared table</td>
+</tr>
+</tbody>
+</table>
+<p><strong>You do not edit the runner, the loader, or any gate.</strong> The task list is read
+from <code>registry/tasks/*.yaml</code>; anything that needs to know about tasks asks there.
 It used to be written out by hand in six places, and two of those copies were
-silently stale.
-
-Don't want to fork? Point `CREATIVITYPRISM_INCLUDE_PATH` at a directory of your
-own YAML files and the runner picks them up.
-
-## The YAML
-
+silently stale.</p>
+<p>Don't want to fork? Point <code>CREATIVITYPRISM_INCLUDE_PATH</code> at a directory of your
+own YAML files and the runner picks them up.</p>
+<h2 id="the-yaml">The YAML<a class="headerlink" href="#the-yaml" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your_task</span><span class="w">                 </span><span class="c1"># must match the filename and --task</span>
 <span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">"Your</span><span class="nv"> </span><span class="s">Task"</span>
 <span class="nt">folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tasks/your_task</span>
@@ -627,82 +742,62 @@ own YAML files and the runner picks them up.
 <span class="nt">limit_supported</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">           </span><span class="c1"># false = the runner rejects --limit</span>
 <span class="nt">loader_parser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tasks/your_task/parser.py:parse</span>
 </code></pre></div>
-
-`loader_parser` takes a file path *or* a dotted module. The path form exists so
+<p><code>loader_parser</code> takes a file path <em>or</em> a dotted module. The path form exists so
 your parser can live beside your code: the alternative was adding it to our
-loader, which is exactly the central edit this is meant to avoid.
-
-## The adapter
-
-Read `registry/adapters/contrib_metaphor.sh` — it is kept as a worked example of
-a task that follows none of our conventions.
-
-**Use `run_stage <your command>`.** It runs the command, or prints it under
-`CREATIVITYPRISM_ADAPTER_DRYRUN=1` so the gate can check your adapter without a
-GPU, a key, or a paid call.
-
-**Announce what you produced**, with a path, not a directory if you can help it:
-
+loader, which is exactly the central edit this is meant to avoid.</p>
+<h2 id="the-adapter">The adapter<a class="headerlink" href="#the-adapter" title="Permanent link">&para;</a></h2>
+<p>Read <code>registry/adapters/contrib_metaphor.sh</code> — it is kept as a worked example of
+a task that follows none of our conventions.</p>
+<p><strong>Use <code>run_stage &lt;your command&gt;</code>.</strong> It runs the command, or prints it under
+<code>CREATIVITYPRISM_ADAPTER_DRYRUN=1</code> so the gate can check your adapter without a
+GPU, a key, or a paid call.</p>
+<p><strong>Announce what you produced</strong>, with a path, not a directory if you can help it:</p>
 <div class="highlight"><pre><span></span><code>emit_artifact<span class="w"> </span>inference<span class="w"> </span><span class="s2">"</span><span class="nv">$TASK_DIR</span><span class="s2">/results/whatever_you_called_it.csv"</span>
 </code></pre></div>
-
-If you announce a *directory*, the runner records the data files under it and
+<p>If you announce a <em>directory</em>, the runner records the data files under it and
 subtracts any file another kind claimed. That rule exists because announcing an
-output directory as `inference` used to hand the analysis loader the evaluation
-files sitting beside it, and the rows came back doubled and mislabelled.
-
-**If your task names its own output at run time** (a timestamp, say), take a
-marker before the stage and use `newest_since`:
-
+output directory as <code>inference</code> used to hand the analysis loader the evaluation
+files sitting beside it, and the rows came back doubled and mislabelled.</p>
+<p><strong>If your task names its own output at run time</strong> (a timestamp, say), take a
+marker before the stage and use <code>newest_since</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MARKER</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>mktemp<span class="k">)</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span>touch<span class="w"> </span><span class="s2">"</span><span class="nv">$MARKER</span><span class="s2">"</span>
 run_stage<span class="w"> </span>python<span class="w"> </span>scripts/gen.py<span class="w"> </span>--num-examples<span class="w"> </span><span class="s2">"</span><span class="nv">$LIMIT</span><span class="s2">"</span>
 <span class="nv">CSV</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>newest_since<span class="w"> </span><span class="s2">"</span><span class="nv">$MARKER</span><span class="s2">"</span><span class="w"> </span>results/*/gen_*.csv<span class="k">)</span><span class="s2">"</span>
 </code></pre></div>
-
-Globbing for "the most recent" is wrong the moment two runs overlap.
-
-## Models: use `model_hub`, and pass the canonical name
-
-If your task hardcodes a provider, this is the one change you will have to make
+<p>Globbing for "the most recent" is wrong the moment two runs overlap.</p>
+<h2 id="models-use-model_hub-and-pass-the-canonical-name">Models: use <code>model_hub</code>, and pass the canonical name<a class="headerlink" href="#models-use-model_hub-and-pass-the-canonical-name" title="Permanent link">&para;</a></h2>
+<p>If your task hardcodes a provider, this is the one change you will have to make
 to your own source. Nothing outside the task can fix it: the alternative is
 copying a credential into a second file, which is both a bad idea and against
-this repo's rules.
-
+this repo's rules.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">model_hub</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_client</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_client</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="n">text</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
 </code></pre></div>
-
-In the adapter, pass **`$MODEL` and `$JUDGE` directly**. Do *not* call
-`lookup_alias`: that maps a canonical name to the per-task alias the built-in
-bundle's own model table wants, and feeding it to `model_hub` produces
-`Model 'gpt-4.1-mini' not in registry/models.yaml` while `GPT4.1-mini` sits right
-there in the registry.
-
-## The parser
-
+<p>In the adapter, pass <strong><code>$MODEL</code> and <code>$JUDGE</code> directly</strong>. Do <em>not</em> call
+<code>lookup_alias</code>: that maps a canonical name to the per-task alias the built-in
+bundle's own model table wants, and feeding it to <code>model_hub</code> produces
+<code>Model 'gpt-4.1-mini' not in registry/models.yaml</code> while <code>GPT4.1-mini</code> sits right
+there in the registry.</p>
+<h2 id="the-parser">The parser<a class="headerlink" href="#the-parser" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="n">inference</span><span class="p">,</span> <span class="n">evaluation</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Each argument is [(file_stem, data), ...]. Return row dicts."""</span>
     <span class="k">return</span> <span class="p">[{</span><span class="s2">"sample_id"</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span> <span class="s2">"metric"</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span> <span class="s2">"prompt"</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
              <span class="s2">"output"</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span> <span class="s2">"eval_score"</span><span class="p">:</span> <span class="o">...</span><span class="p">}]</span>
 </code></pre></div>
-
-`eval_score` of `None` means "this row ran but was not scored" — keep those rows.
+<p><code>eval_score</code> of <code>None</code> means "this row ran but was not scored" — keep those rows.
 Dropping them makes the generation count look like the evaluation count and
-hides how much the evaluator skipped.
-
-## Before you open the PR
-
+hides how much the evaluator skipped.</p>
+<h2 id="before-you-open-the-pr">Before you open the PR<a class="headerlink" href="#before-you-open-the-pr" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>bash<span class="w"> </span>task_runner/tests/test_adapters.sh<span class="w">   </span><span class="c1"># your adapter, dry-run, no cost</span>
 python<span class="w"> </span>task_runner/run.py<span class="w"> </span>--task<span class="w"> </span>your_task<span class="w"> </span>--model<span class="w"> </span>GPT4.1-mini<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--judge-model<span class="w"> </span>GPT4.1-mini<span class="w"> </span>--label<span class="w"> </span>smoke<span class="w"> </span>--limit<span class="w"> </span><span class="m">2</span>
 python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import sys; sys.path.insert(0,'result_analysis'); import loader; \</span>
 <span class="s2">           print(loader.load_records(run_id='smoke'))"</span>
 </code></pre></div>
-
-The last one is the real check. An adapter can exit 0, announce artifacts, and
+<p>The last one is the real check. An adapter can exit 0, announce artifacts, and
 still contribute nothing to the shared table — that has happened here more than
-once, and only reading the rows catches it. -->
+once, and only reading the rows catches it.</p>
 
 
 
