@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#key-findings" class="md-skip">
+        <a href="#keyfindings" class="md-skip">
           Skip to content
         </a>
       
@@ -395,24 +395,6 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Key findings
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -429,80 +411,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#frontier-scale-vs-open-models" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Frontier-scale vs. open models
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#divergent-thinking" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Divergent thinking
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quality-novelty-and-diversity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quality, novelty and diversity
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#correlation-across-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Correlation across metrics
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#takeaways" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Takeaways
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -636,17 +544,65 @@
   
 
 
+<h1 id="keyfindings">keyfindings<a class="headerlink" href="#keyfindings" title="Permanent link">&para;</a></h1>
+<p>Type: Quick Note</p>
 <h1 id="key-findings">Key findings<a class="headerlink" href="#key-findings" title="Permanent link">&para;</a></h1>
-<h2 id="frontier-scale-vs-open-models">Frontier-scale vs. open models<a class="headerlink" href="#frontier-scale-vs-open-models" title="Permanent link">&para;</a></h2>
-<p>...</p>
-<h2 id="divergent-thinking">Divergent thinking<a class="headerlink" href="#divergent-thinking" title="Permanent link">&para;</a></h2>
-<p>...</p>
-<h2 id="quality-novelty-and-diversity">Quality, novelty and diversity<a class="headerlink" href="#quality-novelty-and-diversity" title="Permanent link">&para;</a></h2>
-<p>...</p>
+<h2 id="frontier-scale-vs-open-models">Frontier-scale vs. open models<a class="headerlink" href="#frontier-scale-vs-open-models" title="Permanent link">&para;</a></h2>
+<p>The best frontier-scale models beat the best open models by <strong>more than .10 (15%)
+in every dimension</strong>, as most people would expect; but where that gap comes from is the more interesting part:
+- <strong>By domain.</strong> The gap is widest in <strong>logical reasoning</strong> and <strong>creative
+  writing</strong>, and much narrower in <strong>divergent thinking</strong>. Coding and mathematical
+  reasoning are in every frontier model's technical report; writing data shows up
+  in most post-training mixes, while divergent thinking is in none of them.
+- <strong>By dimension.</strong> <strong>Quality</strong> separates the two groups more than novelty or
+  diversity do, consistent with the same explanation above, since quality carries the
+  reasoning-heavy metrics (NeoCoder Convergence@0, Creative Math Correctness).</p>
+<figure>
+  <img src="assets/img/figure_3(b)_plot-perf-diff.png" alt="Performance gap between frontier-scale and open models across dimensions and domains">
+  <figcaption>Figure 3(b): Performance gap between frontier-scale and open models.</figcaption>
+</figure>
+
+<h2 id="time-of-knowledge-cutoff">Time of Knowledge Cutoff<a class="headerlink" href="#time-of-knowledge-cutoff" title="Permanent link">&para;</a></h2>
+<p>We have also found a performance improvement along the time axis: several of our
+metrics reward content that differs from what came before (L-Uniqueness in
+Creativity Index, Divergence@0 in NeoCoder), so a later training cutoff is itself
+an advantage.</p>
+<figure>
+  <img src="assets/img/figure_3(a)_plot-time%20(1).png" alt="Creativity scores by model release date">
+  <figcaption>Figure 3(a): Creativity scores increase with more recent model release dates.</figcaption>
+</figure>
+
 <h2 id="correlation-across-metrics">Correlation across metrics<a class="headerlink" href="#correlation-across-metrics" title="Permanent link">&para;</a></h2>
-<p>...</p>
-<h2 id="takeaways">Takeaways<a class="headerlink" href="#takeaways" title="Permanent link">&para;</a></h2>
-<p>...</p>
+<p>We correlated every model's performance across every pair of metrics
+(Pearson's r). The structure that comes out:</p>
+<ul>
+<li><strong>Within a task, metrics agree.</strong> TTCT's internal metrics correlate at ≥0.84.
+  Creative writing tasks also agree with each other, more than tasks in the other
+  domains do.</li>
+<li><strong>Within a dimension, it depends which dimension.</strong> Quality metrics highly correlate with each
+  other, and so do diversity metrics, even across unrelated tasks. On the other hand, <strong>Novelty</strong> metrics do not correlate well with each other. They correlate weakly with each other, and sometimes negatively, e.g., Creative Short Story's Surprises and NeoCoder's Divergence@0 sit at <strong>-0.25</strong>.</li>
+<li><strong>Across domains, little agreement.</strong> A model strong in one domain or dimension
+  is not reliably strong in another.</li>
+</ul>
+<figure>
+  <img src="assets/img/figure_4_heatmap_task_full.png" alt="Correlation heatmap across all creativity metrics">
+  <figcaption>Figure 4: Correlations across all metrics.</figcaption>
+</figure>
+
+<figure>
+  <img src="assets/img/figure_5_heatmap_task_sub.png" alt="Metric correlations and model performance profiles grouped by creativity dimension">
+  <figcaption>Figure 5: Correlations and model performance profiles by creativity dimension.</figcaption>
+</figure>
+
+<h2 id="why-novelty-behaves-differently">Why novelty behaves differently<a class="headerlink" href="#why-novelty-behaves-differently" title="Permanent link">&para;</a></h2>
+<p>Novelty is the only dimension that has to
+ask <em>novel compared to what?</em>, and each task answers differently: against a
+human-written corpus, against known human solutions, or against common
+conceptual associations. Quality asks whether an output is well-formed, which is
+intrinsic to it; diversity asks how much outputs differ from each other, which is
+measurable inside one model's own generations. Novelty always needs an outside
+reference, and those references are not the same thing.</p>
+<p>This echoes our motivation: <strong>no single creativity metric stands in for the rest and performing well in one metric or one dimension does not guarantee good performance in another.</strong></p>
 
 
 
